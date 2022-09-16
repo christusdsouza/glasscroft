@@ -80,7 +80,6 @@ public class MainActivity extends Activity {
                 resp += line;
                 System.out.println(line);
             }
-            setDoOutput(false);
             //i have no idea what any of this means, i just copy-pasted it from a tutorial so dont ask me to fix it
             return resp;
         } catch (Exception e) {
