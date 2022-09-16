@@ -53,7 +53,7 @@ public class MainActivity extends Activity {
         try {
             //this makes the http request (wild i know)
             //its on main thread because im a lazy piece of shit who doesnt know how to do async stuff
-            URL serverUrl = new URL("http://192.168.86.38:8000/verysecurekey/getmcresponse/");
+            URL serverUrl = new URL("SET YOUR URL HERE");
             System.out.println(serverUrl);
             URLConnection urlConnection = serverUrl.openConnection();
             HttpURLConnection httpConnection = (HttpURLConnection) urlConnection;
