@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
@@ -32,7 +33,7 @@ public class MainActivity extends Activity {
     /**
      * {@link CardScrollView} to use as the main content view.
      */
-    public String coolString;
+    public String coolString = "meme";
     private CardScrollView mCardScroller;
 
     /**
@@ -53,7 +54,7 @@ public class MainActivity extends Activity {
         try {
             //this makes the http request (wild i know)
             //its on main thread because im a lazy piece of shit who doesnt know how to do async stuff
-            URL serverUrl = new URL("SET YOUR URL HERE");
+            URL serverUrl = new URL("YOUR URL");
             System.out.println(serverUrl);
             URLConnection urlConnection = serverUrl.openConnection();
             HttpURLConnection httpConnection = (HttpURLConnection) urlConnection;
@@ -112,11 +113,21 @@ public class MainActivity extends Activity {
             e.printStackTrace();
         }
         coolString = properstatement;
+        View aview = new CardBuilder(this, CardBuilder.Layout.TEXT)
+                .setText(coolString)
+                .showStackIndicator(true)
+                .getView();
+        setContentView(aview);
+        buildView(coolString);
+        System.out.println("we did the variable meme");
         //we call lool inside of the onInit class so we need a final variable
         final String lool = properstatement;
         System.out.println(properstatement);
         coolString = properstatement;
         //i forget why we do this
+
+        setContentView(aview);
+        buildView(coolString);
         mSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -124,12 +135,18 @@ public class MainActivity extends Activity {
                 mSpeech.speak(lool, TextToSpeech.QUEUE_FLUSH, null);
             }
         });
+        mView.invalidate();
+
         return coolString;
     }
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        mView = buildView();
+        ArrayList<String> voiceResults = getIntent().getExtras()
+                .getStringArrayList(RecognizerIntent.EXTRA_RESULTS);
+        //get the data from the voice request at launch
+
+        mView = buildView("Placeholder");
         mSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -162,11 +179,9 @@ public class MainActivity extends Activity {
             }
 
         });
-        ArrayList<String> voiceResults = getIntent().getExtras()
-                .getStringArrayList(RecognizerIntent.EXTRA_RESULTS);
-        //get the data from the voice request at launch
-        meme(voiceResults);
+
         //then call the function to do stuff with the request
+        meme(voiceResults);
         mCardScroller.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -190,11 +205,12 @@ public class MainActivity extends Activity {
         mCardScroller.deactivate();
         super.onPause();
     }
-    private View buildView() {
-        getWindow().requestFeature(WindowUtils.FEATURE_VOICE_COMMANDS);
+    private View buildView(String text) {
+        System.out.println("we do the render meme " + coolString);
         CardBuilder card = new CardBuilder(this, CardBuilder.Layout.TEXT);
         //oh yeah this is what that string was for
-        card.setText(coolString);
+
+        card.setText("i give up just listen to the audio");
         return card.getView();
     }
 
