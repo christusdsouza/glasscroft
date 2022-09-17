@@ -208,7 +208,6 @@ public class MainActivity extends Activity {
     private View buildView(String text) {
         System.out.println("we do the render meme " + coolString);
         CardBuilder card = new CardBuilder(this, CardBuilder.Layout.TEXT);
-        //oh yeah this is what that string was for
 
         card.setText("i give up just listen to the audio");
         return card.getView();
